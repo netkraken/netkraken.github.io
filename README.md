@@ -1,2 +1,1 @@
-# netkraken.github.io
-netkraken homepage
+[netkraken homepage](http://netkraken.github.io/)
