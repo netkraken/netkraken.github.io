@@ -1,10 +1,12 @@
+"use strict";
+
 function getUrlVar(key){
     // https://gist.github.com/1771618
     var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
     return result && unescape(result[1]) || "";
 }
 
-startsWith = function(s, pattern) {
+function startsWith(s, pattern) {
     return s.lastIndexOf(pattern, 0) === 0;
 }
 
@@ -141,7 +143,7 @@ function renderHive(nodes, links, nrAxes, container, infoElement, size, color, a
 }
 
 function createGroupFunction(mapping) {
-    grouping = function(name) {
+    let grouping = function(name) {
         var result = 0;
         for (var key in mapping) {
             var mapped = mapping[key];
@@ -167,4 +169,28 @@ function createGroupFunction(mapping) {
         //grouping.description[0] = "...";
     //}
     return grouping;
+}
+
+function renderSingleHive(data, protocol, mapping, nrAxis, element, infoText, size) {
+    let nodes = {};
+    let links = [];
+    data.links.forEach(function(link) {
+        if (link.protocol === protocol) {
+            let source_name = link.source;
+            let target_name = link.target;
+            let source_node = data.nodes[source_name];
+            let target_node = data.nodes[target_name];
+            source_node.group = mapping(source_name);
+            target_node.group = mapping(target_name);
+            if (source_node.group != target_node.group) {
+                link.source = source_node;
+                link.target = target_node;
+                links.push(link);
+                nodes[source_name] = source_node;
+                nodes[target_name] = target_node;
+            }
+        }
+    });
+
+    renderHive(nodes, links, nrAxis, element, infoText, size);
 }
