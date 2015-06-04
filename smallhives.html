@@ -14,6 +14,10 @@
 </head>
 <body>
 
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+    </ol>
+
     <article>
         <h1><img src="res/octopus.png"> small multiple hives</h1>
 
@@ -37,6 +41,22 @@
                 <td id="graph_0_3"></td>
                 <td id="graph_0_4"></td>
             </tr>
+            <tr>
+                <th></th>
+                <th>vrace</th>
+                <th>cfinger</th>
+                <th>imap</th>
+                <th>squid</th>
+                <th>smtp</th>
+            </tr>
+            <tr class="graphs">
+                <th id="description0"></th>
+                <td id="graph_0_5"></td>
+                <td id="graph_0_6"></td>
+                <td id="graph_0_7"></td>
+                <td id="graph_0_8"></td>
+                <td id="graph_0_9"></td>
+            </tr>
         </table>
     </article>
 
@@ -59,6 +79,11 @@
             renderSingleHive(data, "ssh", mapping0, 3, "#graph_0_2", "#infoText");
             renderSingleHive(data, "ldaps", mapping0, 3, "#graph_0_3", "#infoText");
             renderSingleHive(data, "mysql", mapping0, 3, "#graph_0_4", "#infoText");
+            renderSingleHive(data, "vrace", mapping0, 3, "#graph_0_5", "#infoText");
+            renderSingleHive(data, "cfinger", mapping0, 3, "#graph_0_6", "#infoText");
+            renderSingleHive(data, "imap", mapping0, 3, "#graph_0_7", "#infoText");
+            renderSingleHive(data, "squid", mapping0, 3, "#graph_0_8", "#infoText");
+            renderSingleHive(data, "smtp", mapping0, 3, "#graph_0_9", "#infoText");
         });
     </script>
 </body>
