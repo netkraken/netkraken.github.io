@@ -1,0 +1,53 @@
+article {
+    padding: 0em 2em;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis {
+  stroke: #555;
+  stroke-width: 3px;
+}
+.node {
+  stroke: #555;
+  stroke-width: 1px;
+  fill: grey;
+}
+.node circle {
+}
+.node.active {
+  stroke: #f00;
+  stroke-width: 1.5px;
+  fill: #f00;
+}
+.node.selected {
+  stroke: #f00;
+  stroke-width: 3px;
+}
+
+.link {
+  fill: none;
+  stroke-width: 1.5px;
+  stroke-opacity: .3;
+}
+.link.active {
+  stroke-width: 5px;
+  stroke-opacity: 1;
+}
+.link.selected {
+  stroke-width: 5px;
+  stroke-opacity: 1;
+}
+#textInfo {
+  font-size: 20;
+  font-variant: small-caps;
+}
+
+.right {
+  text-align: right;
+  padding-right: 1ex;
+}

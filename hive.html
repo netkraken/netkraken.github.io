@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <title>netkraken | single hive</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/hive.css" />
+</head>
+<body>
+
+    <article>
+        <h1><img src="res/octopus.png"> single hive | <span id="protocol"></span> protocol</h1>
+
+        <div id="infoText">&nbsp;</div>
+        <div id="graph_0_0"></div>
+    </article>
+
+    <script src="js/d3.min.js"></script>
+    <script src="js/link.js"></script>
+    <script src="js/hive.js"></script>
+    <script>
+        "use strict";
+
+        let source = getUrlVar("source");
+        source = (source === "") ? "model.live.reduced.json" : source;
+
+        let protocol = getUrlVar("protocol");
+        protocol = (protocol === "") ? "http" : protocol;
+        document.getElementById("protocol").innerHTML = protocol;
+
+        let mapping = createGroupFunction(JSON.parse(getUrlVar("mapping")));
+        let desc = mapping.description;
+
+        d3.json(source, function(data) {
+            let nodes = {};
+            let links = [];
+            data.links.forEach(function(link) {
+                if (link.protocol === protocol) {
+                    let source_name = link.source;
+                    let target_name = link.target;
+                    let source_node = data.nodes[source_name];
+                    let target_node = data.nodes[target_name];
+                    source_node.group = mapping(source_name);
+                    target_node.group = mapping(target_name);
+                    if (source_node.group != target_node.group) {
+                        link.source = source_node;
+                        link.target = target_node;
+                        links.push(link);
+                        nodes[source_name] = source_node;
+                        nodes[target_name] = target_node;
+                    }
+                }
+            });
+
+            renderHive(nodes, links, 3, "#graph_0_0", "#infoText", 600);
+        });
+    </script>
+</body>
+</html>
