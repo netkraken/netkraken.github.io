@@ -2,6 +2,10 @@ article {
     padding: 0em 2em;
 }
 
+li {
+    list-style-image:url('../res/octopus-listitem.png');
+}
+
 .group_0 {
     stroke: #1F77B4;
     fill: #1F77B4;
