@@ -23,6 +23,7 @@
     <script src="js/d3.min.js"></script>
     <script src="js/link.js"></script>
     <script src="js/hive.js"></script>
+    <script src="js/jsxcompressor.min.js"></script>
     <script>
         "use strict";
 
@@ -36,7 +37,9 @@
         let mapping = createGroupFunction(JSON.parse(getUrlVar("mapping")));
         let desc = mapping.description;
 
-        d3.json(source, function(data) {
+        d3.xhr(source, function(response) {
+            let binary = JXG.decompress(response.response);
+            let data = JSON.parse(binary);
             let nodes = {};
             let links = [];
             data.links.forEach(function(link) {
