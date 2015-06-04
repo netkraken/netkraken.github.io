@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <title>bigpicture | live state | small multiple hives</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/hive.css" />
+    <style>
+        th {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <article>
+        <h1><img src="res/octopus.png"> small multiple hives</h1>
+
+        <table>
+            <tr>
+                <td colspan=6" id="infoText">...</td>
+            </tr>
+            <tr>
+                <th></th>
+                <th>http</th>
+                <th>https</th>
+                <th>ssh</th>
+                <th>ldaps</th>
+                <th>mysql</th>
+            </tr>
+            <tr class="graphs">
+                <th id="description0"></th>
+                <td id="graph_0_0"></td>
+                <td id="graph_0_1"></td>
+                <td id="graph_0_2"></td>
+                <td id="graph_0_3"></td>
+                <td id="graph_0_4"></td>
+            </tr>
+        </table>
+    </article>
+
+    <script src="js/d3.min.js"></script>
+    <script src="js/link.js"></script>
+    <script src="js/hive.js"></script>
+    <script>
+        var source = getUrlVar("source");
+        source = (source === "") ? "model.live.reduced.json" : source;
+        console.log("source: " + source);
+
+        var size = getUrlVar("size");
+        size = (size === "") ? 200 : +size;
+
+        var mapping0 = createGroupFunction(JSON.parse(getUrlVar("mapping0")));
+
+        d3.json(source, function(data) {
+            renderSingleHive(data, "http", mapping0, 3, "#graph_0_0", "#infoText");
+            renderSingleHive(data, "https", mapping0, 3, "#graph_0_1", "#infoText");
+            renderSingleHive(data, "ssh", mapping0, 3, "#graph_0_2", "#infoText");
+            renderSingleHive(data, "ldaps", mapping0, 3, "#graph_0_3", "#infoText");
+            renderSingleHive(data, "mysql", mapping0, 3, "#graph_0_4", "#infoText");
+        });
+    </script>
+</body>
+</html>
+
+

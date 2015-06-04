@@ -6,9 +6,21 @@
         <link rel="stylesheet" type="text/css" href="css/hive.css">
     </head>
     <body>
-        <img src="https://raw.githubusercontent.com/netkraken/netkraken.github.io/master/res/octopus.png">
+        <article>
+            <img src="https://raw.githubusercontent.com/netkraken/netkraken.github.io/master/res/octopus.png">
 
-        <h2>Some examples of the netkraken analyzer</h2>
-        <a href='/hive.html?source=dummy.json&mapping={"devel":1,"testing":2}&protocol=http'>single hive, http protocol</a>
+            <h2>Some examples of the netkraken analyzer</h2>
+
+            <ul>
+                <li><a href='/smallhives.html?source=dummy.json&mapping0={"devel":1,"testing":2}'>small multiples</a></li>
+                <li>
+                    single hive, <a href='/hive.html?source=dummy.json&mapping={"devel":1,"testing":2}&protocol=http'>http protocol</a>,
+                    <a href='/hive.html?source=dummy.json&mapping={"devel":1,"testing":2}&protocol=https'>https protocol</a>,
+                    <a href='/hive.html?source=dummy.json&mapping={"devel":1,"testing":2}&protocol=ssh'>ssh protocol</a>,
+                    <a href='/hive.html?source=dummy.json&mapping={"devel":1,"testing":2}&protocol=ldaps'>ldaps protocol</a>,
+                    <a href='/hive.html?source=dummy.json&mapping={"devel":1,"testing":2}&protocol=mysql'>mysql protocol</a>
+                </li>
+            </ul>
+        </article>
     </body>
 </html>
