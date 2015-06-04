@@ -2,6 +2,18 @@ article {
     padding: 0em 2em;
 }
 
+.group_0 {
+    stroke: #1F77B4;
+    fill: #1F77B4;
+}
+.group_1 {
+    stroke: #FF7F0E;
+    fill: #FF7F0E;
+}
+.group_2 {
+    stroke: #2CA02C;
+    fill: #2CA02C;
+}
 .axis path, .axis line {
   fill: none;
   stroke: #000;
@@ -15,7 +27,6 @@ article {
 .node {
   stroke: #555;
   stroke-width: 1px;
-  fill: grey;
 }
 .node circle {
 }
@@ -35,7 +46,8 @@ article {
   stroke-opacity: .3;
 }
 .link.active {
-  stroke-width: 5px;
+  stroke: #f00;
+  stroke-width: 3px;
   stroke-opacity: 1;
 }
 .link.selected {

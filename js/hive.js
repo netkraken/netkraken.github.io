@@ -14,10 +14,7 @@ function degrees(radians) {
     return radians / Math.PI * 180 - 90;
 }
 
-var defaultColor = d3.scale.category10()
-    .domain(d3.range(20));
-
-function renderHive(nodes, links, nrAxes, container, infoElement, size, color, angle) {
+function renderHive(nodes, links, nrAxes, container, infoElement, size, angle) {
     size = (typeof size === "undefined") ? 300 : size;
 
     var width = size,
@@ -28,8 +25,6 @@ function renderHive(nodes, links, nrAxes, container, infoElement, size, color, a
 
     var radius = d3.scale.linear()
         .range([innerRadius, outerRadius]);
-
-    color = (typeof color === "undefined") ? defaultColor : color;
 
     var defaultAngle = d3.scale.ordinal()
         .domain(d3.range(nrAxes + 1))
@@ -57,11 +52,10 @@ function renderHive(nodes, links, nrAxes, container, infoElement, size, color, a
     svg.selectAll(".link")
         .data(links)
         .enter().append("path")
-        .attr("class", "link")
+        .attr("class", function(d) { return "link group_" + d.source.group; })
         .attr("d", link()
                 .angle(function(d) { return angle(d.group); })
                 .radius(function(d) { return radius(d.index); }))
-        .style("stroke", function(d) { return color(d.source.group); })
         .on("mouseover", linkMouseover)
         .on("mouseout", mouseout);
 
@@ -71,11 +65,10 @@ function renderHive(nodes, links, nrAxes, container, infoElement, size, color, a
     svg.selectAll(".node")
         .data(values)
         .enter().append("circle")
-        .attr("class", "node")
+        .attr("class", function(d) { return "node group_" + d.group; })
         .attr("transform", function(d) { return "rotate(" + degrees(angle(d.group)) + ")"; })
         .attr("cx", function(d) { return radius(d.index); })
         .attr("r", nodeRadius)
-        .style("fill", function(d) { return color(d.group); })
         .on("mouseover", nodeMouseover)
         .on("click", nodeClick)
         .on("mouseout", mouseout);
