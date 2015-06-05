@@ -6,11 +6,33 @@
         <link rel="stylesheet" type="text/css" href="css/hive.css">
     </head>
     <body>
+        <ol class="breadcrumb">
+            <li><a href="/">netkraken</a></li>
+        </ol>
+
         <article>
-            <img src="https://raw.githubusercontent.com/netkraken/netkraken.github.io/master/res/octopus.png">
+            <h1>
+                <img src="https://raw.githubusercontent.com/netkraken/netkraken.github.io/master/res/octopus.png">
+                netkraken | network analyzer
+            </h1>
+
+            <h2>tl;dr</h2>
+            <ul>
+                <li>records network connections of a bunch of hosts, continuously</li>
+                <li>aggregates connection data: minutes, hours, days</li>
+                <li>analyzes and displays connection data</li>
+            </ul>
+
+            <h2>Features</h2>
+            <ul>
+                <li>connection recorder (aka minion) compatible with python2.6/2.7/3.3/3.4/pypy</li>
+                <li>aggregation runs on minion, scales well</li>
+                <li>communication over ssh</li>
+                <li>multi-dimensional analyzes, configurable via url</li>
+            </ul>
 
             <h2>Some examples of the netkraken analyzer</h2>
-
+            <em>Note: These examples are based on anonymized data of a real network.</em>
             <ul>
                 <li><a href='/smallhives.html?source=dummy.json.gz.txt&mapping0={"devel":1,"testing":2}'>small multiples</a></li>
                 <li>

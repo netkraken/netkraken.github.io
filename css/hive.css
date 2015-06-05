@@ -1,5 +1,10 @@
 article {
-    padding: 0em 2em;
+    padding: 0em 4em;
+}
+
+ul {
+    list-style-position: inside;
+    padding-left: 0;
 }
 
 li {
@@ -58,12 +63,24 @@ li {
   stroke-width: 5px;
   stroke-opacity: 1;
 }
+
 #textInfo {
   font-size: 20;
   font-variant: small-caps;
 }
 
+#infoText {
+    font-size: large;
+}
 .right {
   text-align: right;
   padding-right: 1ex;
+}
+
+.hive-description {
+    position: absolute;
+    top: 46px;
+    right: 4em;
+    width: 40vw;
+    text-align: right;
 }
