@@ -31,7 +31,27 @@
                 <li>multi-dimensional analyzes, configurable via url</li>
             </ul>
 
-            <h2>Some examples of the netkraken analyzer</h2>
+            <h2>Some Examples of the Netkraken Analyzer</h2>
+
+            <h3>function group level (similar hosts grouped together)</h3>
+            <em>Note: These examples are based on anonymized data of a real network:
+                500 function groups,
+                3.000  connections,
+                700kB plain json file,
+                80kB compressed (12%).
+            </em>
+            <ul>
+                <li><a href='/smallhives.html?source=dummy2.json.gz.txt&mapping0={"devel":1,"testing":2}'>small multiples</a></li>
+                <li>
+                    single hive, <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=http'>http protocol</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=https'>https protocol</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ssh'>ssh protocol</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ldaps'>ldaps protocol</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=mysql'>mysql protocol</a>
+                </li>
+            </ul>
+
+            <h3>host level (all individual hosts)</h3>
             <em>Note: These examples are based on anonymized data of a real network:
                 1.300 nodes,
                 10.000  connections,
