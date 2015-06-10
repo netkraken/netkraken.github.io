@@ -136,7 +136,7 @@ function renderHive(nodes, links, nrAxes, container, infoElement, size, angle) {
 }
 
 function createGroupFunction(mapping) {
-    let grouping = function(name) {
+    var grouping = function(name) {
         var result = 0;
         for (var key in mapping) {
             var mapped = mapping[key];
@@ -165,14 +165,14 @@ function createGroupFunction(mapping) {
 }
 
 function renderSingleHive(data, protocol, mapping, nrAxis, element, infoText, size) {
-    let nodes = {};
-    let links = [];
+    var nodes = {};
+    var links = [];
     data.links.forEach(function(link) {
         if (link.protocol === protocol) {
-            let source_name = link.source;
-            let target_name = link.target;
-            let source_node = data.nodes[source_name];
-            let target_node = data.nodes[target_name];
+            var source_name = link.source;
+            var target_name = link.target;
+            var source_node = data.nodes[source_name];
+            var target_node = data.nodes[target_name];
             source_node.group = mapping(source_name);
             target_node.group = mapping(target_name);
             if (source_node.group != target_node.group) {

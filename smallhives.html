@@ -90,8 +90,8 @@
         var mapping0 = createGroupFunction(JSON.parse(getUrlVar("mapping0")));
 
         d3.xhr(source, function(response) {
-            let binary = JXG.decompress(response.response);
-            let data = JSON.parse(binary);
+            var binary = JXG.decompress(response.response);
+            var data = JSON.parse(binary);
             renderSingleHive(data, "http", mapping0, 3, "#graph_0_0", "#infoText");
             renderSingleHive(data, "https", mapping0, 3, "#graph_0_1", "#infoText");
             renderSingleHive(data, "ssh", mapping0, 3, "#graph_0_2", "#infoText");
