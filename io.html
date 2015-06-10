@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <title>netkraken | single hive</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/hive.css" />
+    <link rel="stylesheet" type="text/css" href="css/hive-in-out.css" />
+</head>
+<body>
+
+    <ol class="breadcrumb">
+        <li><a href="/">netkraken</a></li>
+        <li>single hive</li>
+    </ol>
+    <div class="hive-description">
+        <em>Description: Hosts get mapped to three groups, based on their name: 
+            <br/>
+            "devel-*" on lower right axis (orange), 
+            <br/>
+            "testing-*" on lower left axis (green),
+            <br/>
+            rest on upper axis (blue).
+            <br/>
+            Connections are in the color of the source host.
+        </em>
+    </div>
+
+
+    <article>
+        <h1><img src="res/octopus.png"> single hive | <span id="protocol"></span> protocol</h1>
+
+        <div id="infoText">&nbsp;</div>
+        <div id="graph_0_0"></div>
+    </article>
+
+    <script src="js/d3.min.js"></script>
+    <script src="js/link.js"></script>
+    <script src="js/hive.js"></script>
+    <script src="js/jsxcompressor.min.js"></script>
+    <script>
+        var source = getUrlVar("source");
+        source = (source === "") ? "model.live.reduced.json" : source;
+        console.log("source: " + source);
+
+        var selected = getUrlVar("selected");
+        selected = (selected === "") ? "foo" : selected;
+        console.log("selected: " + selected);
+        d3.selectAll(".selected").text(selected);
+
+        var blacklisted = getUrlVar("blacklisted");
+        blacklisted = (blacklisted === "") ? undefined : blacklisted;
+        console.log("blacklisted: " + blacklisted);
+
+        var name_regexp = getUrlVar("name-regexp");
+        console.log("name_regexp: " + name_regexp);
+
+        var size = getUrlVar("size");
+        console.log("size: " + size);
+        size = (size === "") ? 600 : size;
+        console.log("size: " + size);
+
+        var filename = source;
+
+        calcIndex = function(node) {
+            var sum = 0;
+            for (var i = 0; i < node.name.length; i++) {
+                sum += node.name.charCodeAt(i);
+            }
+            node.index = (131 * sum % 1000) / 1000.0;
+            node.scatterfactor = (77 * sum % 1000) / 1000 - .5;
+        }
+
+        d3.xhr(source, function(response) {
+            var binary = JXG.decompress(response.response);
+            var data = JSON.parse(binary);
+            console.log(data);
+
+            var links = [];
+            data.links.forEach(function(link) {
+                var sn = data.nodes[link.source];
+                var tn = data.nodes[link.target];
+                if (!startsWith(sn.name, selected) && !startsWith(tn.name, selected)) {
+                    return;
+                }
+                if (blacklisted) {
+                    if (startsWith(sn.name, blacklisted) || startsWith(tn.name, blacklisted)) {
+                        return;
+                    }
+                }
+                var sourceNode = {"name": sn.name};
+                var targetNode = {"name": tn.name};
+                if (startsWith(sourceNode.name, selected)) {
+                    sourceNode.group = 1;
+                    targetNode.group = 2;
+                }
+                if (startsWith(targetNode.name, selected)) {
+                    sourceNode.group = 0;
+                    targetNode.group = 1;
+                }
+                if (name_regexp) {
+                    var regexp = new RegExp(name_regexp);
+                    var result = regexp.exec(sourceNode.name);
+                    if (result) {
+                      sourceNode.name = result[1];
+                    }
+                    result = regexp.exec(targetNode.name);
+                    if (result) {
+                      targetNode.name = result[1];
+                    }
+                }
+                sourceNode.id = sourceNode.name;
+                targetNode.id = targetNode.name;
+                sourceNode.hash = sourceNode.group + " " + sourceNode.id;
+                targetNode.hash = targetNode.group + " " + targetNode.id;
+                calcIndex(sourceNode);
+                calcIndex(targetNode);
+                var newLink = {"source": sourceNode, "target": targetNode, "protocol": link.protocol};
+                newLink.id = sourceNode.name + " -> " + targetNode.name;
+                //console.log(sourceNode.name + " -[" + link.protocol + "]-> " + targetNode.name);
+                links.push(newLink);
+            });
+            console.log(links);
+
+        });
+/*
+        http://localhost:5000/io.html?source=dummy2.json.gz.txt&selected=testing-4b42
+        d3.json(filename, function(connections) {
+            var nodesMap = {};
+            links.forEach(function(link){
+                nodesMap[link.source.hash] = link.source;
+                nodesMap[link.target.hash] = link.target;
+            });
+            var nodes = new Array();
+            for (var key in nodesMap) {
+                nodes.push(nodesMap[key]);
+            };
+            //console.log(nodes);
+            var container = "#graph_0_0";
+            var info = "#infoText";
+            var nrAxes = 3;
+
+            var nodeColorer = function(node) {return "grey";};
+            var linkColors = {
+                'socks': 'yellow',
+                'nfs': 'red',
+                'jdbc': 'orange',
+                'http': 'lightgreen',
+                'https': 'darkgreen',
+                'jms': 'cyan',
+                'tcp': 'tan',
+                'smtp': 'wheat',
+                'ftp': 'peru',
+                'unknown': 'black',
+
+                "ssh": "purple",
+                "cfinger": "lightgrey",
+                "ldap": "lightgrey",
+                "ldaps": "lightgrey",
+                "sd": "lightgrey",
+            };
+            var linkColorer = function(link) {
+                var color = linkColors[link.protocol];
+                return (color != undefined) ? color : "grey";
+            };
+            linkColorer.colorMap = linkColors;
+
+            //var angles = [3 * Math.PI / 2, 0, Math.PI / 2];
+            var angles = [0, 3 * Math.PI / 2, Math.PI];
+            var flatAngles = function(i) {
+                return angles[i];
+            };
+
+            console.log(links);
+            renderHive3("bigpicture | live data | " + selected, window.location, nodes, links, nrAxes, container, info, size, nodeColorer, linkColorer, flatAngles);
+        });
+*/
+    </script>
+  </body>
+</html>
