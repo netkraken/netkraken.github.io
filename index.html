@@ -25,7 +25,7 @@
 
             <h2>Features</h2>
             <ul>
-                <li>connection recorder (aka minion) compatible with python2.6/2.7/3.3/3.4/pypy</li>
+                <li>connection recorder (aka minion) compatible with python 2.6/2.7/3.3/3.4/pypy</li>
                 <li>aggregation runs on minion, scales well</li>
                 <li>communication over ssh</li>
                 <li>multi-dimensional analyzes, configurable via url</li>
@@ -37,17 +37,20 @@
             <em>Note: These examples are based on anonymized data of a real network:
                 500 function groups,
                 3.000  connections,
-                700kB plain json file,
-                80kB compressed (12%).
+                700kB plain data
             </em>
             <ul>
                 <li><a href='/smallhives.html?source=dummy2.json.gz.txt&mapping0={"devel":1,"testing":2}'>small multiples</a></li>
-                <li>
-                    single hive, <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=http'>http protocol</a>,
-                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=https'>https protocol</a>,
-                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ssh'>ssh protocol</a>,
-                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ldaps'>ldaps protocol</a>,
-                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=mysql'>mysql protocol</a>
+                <li>single hives for selected protocols: <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=http'>http</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=https'>https</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ssh'>ssh</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ldaps'>ldaps</a>,
+                    <a href='/hive.html?source=dummy2.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=mysql'>mysql</a>
+                </li>
+                <li>in- and outbound connections of selected function groups:<br/>
+                    a <a href="io.html?source=dummy2.json.gz.txt&selected=testing-179e">build server</a> (with lots of http(s) connections),
+                    a <a href="io.html?source=dummy2.json.gz.txt&selected=testing-3064">jump host</a> (crowded with ssh sessions),
+                    a <a href="io.html?source=dummy2.json.gz.txt&selected=testing-4b42">rather boring host</a>
                 </li>
             </ul>
 
@@ -55,13 +58,11 @@
             <em>Note: These examples are based on anonymized data of a real network:
                 1.300 nodes,
                 10.000  connections,
-                3.000kB plain json file,
-                300kB compressed (10%).
+                3.000kB plain data
             </em>
             <ul>
                 <li><a href='/smallhives.html?source=dummy.json.gz.txt&mapping0={"devel":1,"testing":2}'>small multiples</a></li>
-                <li>
-                    single hive, <a href='/hive.html?source=dummy.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=http'>http protocol</a>,
+                <li>single hives: <a href='/hive.html?source=dummy.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=http'>http protocol</a>,
                     <a href='/hive.html?source=dummy.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=https'>https protocol</a>,
                     <a href='/hive.html?source=dummy.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ssh'>ssh protocol</a>,
                     <a href='/hive.html?source=dummy.json.gz.txt&mapping={"devel":1,"testing":2}&protocol=ldaps'>ldaps protocol</a>,
