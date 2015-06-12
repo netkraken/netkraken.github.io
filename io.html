@@ -6,33 +6,22 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
     <link rel="stylesheet" type="text/css" href="css/hive.css" />
-    <link rel="stylesheet" type="text/css" href="css/hive-in-out.css" />
+    <link rel="stylesheet" type="text/css" href="css/inout.css" />
 </head>
 <body>
 
     <ol class="breadcrumb">
         <li><a href="/">netkraken</a></li>
-        <li>single hive</li>
+        <li>connections of <span class="selected"></span></li>
     </ol>
-    <div class="hive-description">
-        <em>Description: Hosts get mapped to three groups, based on their name: 
-            <br/>
-            "devel-*" on lower right axis (orange), 
-            <br/>
-            "testing-*" on lower left axis (green),
-            <br/>
-            rest on upper axis (blue).
-            <br/>
-            Connections are in the color of the source host.
-        </em>
-    </div>
-
 
     <article>
-        <h1><img src="res/octopus.png"> single hive | <span id="protocol"></span> protocol</h1>
+        <h1><img src="res/octopus.png">
+            connections of <span class="selected"></span>
+        </h1>
 
-        <div id="infoText">&nbsp;</div>
         <div id="graph_0_0"></div>
+        <div id="infoText">&nbsp;</div>
     </article>
 
     <script src="js/d3.min.js"></script>
@@ -72,10 +61,12 @@
             node.scatterfactor = (77 * sum % 1000) / 1000 - .5;
         }
 
+        var container = "#graph_0_0";
+        var info = "#infoText";
+
         d3.xhr(source, function(response) {
             var binary = JXG.decompress(response.response);
             var data = JSON.parse(binary);
-            console.log(data);
 
             var links = [];
             data.links.forEach(function(link) {
@@ -99,6 +90,7 @@
                     sourceNode.group = 0;
                     targetNode.group = 1;
                 }
+                /*
                 if (name_regexp) {
                     var regexp = new RegExp(name_regexp);
                     var result = regexp.exec(sourceNode.name);
@@ -110,6 +102,7 @@
                       targetNode.name = result[1];
                     }
                 }
+                */
                 sourceNode.id = sourceNode.name;
                 targetNode.id = targetNode.name;
                 sourceNode.hash = sourceNode.group + " " + sourceNode.id;
@@ -121,12 +114,7 @@
                 //console.log(sourceNode.name + " -[" + link.protocol + "]-> " + targetNode.name);
                 links.push(newLink);
             });
-            console.log(links);
 
-        });
-/*
-        http://localhost:5000/io.html?source=dummy2.json.gz.txt&selected=testing-4b42
-        d3.json(filename, function(connections) {
             var nodesMap = {};
             links.forEach(function(link){
                 nodesMap[link.source.hash] = link.source;
@@ -136,10 +124,6 @@
             for (var key in nodesMap) {
                 nodes.push(nodesMap[key]);
             };
-            //console.log(nodes);
-            var container = "#graph_0_0";
-            var info = "#infoText";
-            var nrAxes = 3;
 
             var nodeColorer = function(node) {return "grey";};
             var linkColors = {
@@ -166,15 +150,21 @@
             };
             linkColorer.colorMap = linkColors;
 
-            //var angles = [3 * Math.PI / 2, 0, Math.PI / 2];
-            var angles = [0, 3 * Math.PI / 2, Math.PI];
-            var flatAngles = function(i) {
-                return angles[i];
-            };
-
-            console.log(links);
-            renderHive3("bigpicture | live data | " + selected, window.location, nodes, links, nrAxes, container, info, size, nodeColorer, linkColorer, flatAngles);
+            renderInOut(
+                    "",
+                    window.location,
+                    nodes,
+                    links,
+                    container,
+                    info,
+                    size,
+                    nodeColorer,
+                    linkColorer);
         });
+/*
+        http://localhost:5000/io.html?source=dummy2.json.gz.txt&selected=testing-4b42
+        http://localhost:5000/io.html?source=dummy2.json.gz.txt&selected=testing-179e
+        http://localhost:5000/io.html?source=dummy2.json.gz.txt&selected=testing-3064
 */
     </script>
   </body>
